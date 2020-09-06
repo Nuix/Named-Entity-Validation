@@ -11,7 +11,7 @@ This project was conceptualised as a way of adding a convenient way for validati
 
 Most captures are so generic in nature (i.e. 8 digits) yet those entities have a way of checking that those 8 digits are valid.
 
-One of the largest reasons people may avoid Nuix entity wrappers is because of this greedy way for capture with a requirement to validate these entities outside of Nuix.
+One of the largest reasons people may avoid Nuix entity wrappers is because of the greedy way they are captured with a requirement to validate these entities outside of Nuix.
 
 It could be used in replacement to the built in Named Entities and will in fact generate the same results.
 
@@ -66,12 +66,14 @@ This is a two-stage process.
 
 ## How does it work?
 Many entities (especially old ones) were designed to be easily validated at the client side with mechanical (crank driven believe it or not!) which were then translated to basic machine language processes.
+
 Nowadays things like ID's can be validated quicker at the server and may not follow any particular pattern.... If you have one of these types, this isn't for you...
 
 For entities with known algorithms to check, things like a LUHN validator or tax number, health insurance many are out there... they usually operate on a few easily described steps.
+
 This project works on that concept. The steps are all generalized so any algorithm can use them.
 
-For example an Australian Business Number is publicly described on their website as having a [specific format and algorithm|https://abr.business.gov.au/Help/AbnFormat]:
+For example an Australian Business Number is publicly described on their website as having a [specific format and algorithm](https://abr.business.gov.au/Help/AbnFormat):
 
 Those steps could be written as:
 1. Split the characters
