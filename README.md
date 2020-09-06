@@ -11,7 +11,7 @@ This project was conceptualised as a way of adding a convenient way for validati
 
 Most captures are so generic in nature (i.e. 8 digits) yet those entities have a way of checking that those 8 digits are valid.
 
-One of the largest reasons people may avoid Nuix entity wrappers is because of this greedy way for capture with a requirement to validate these entities outside of Nuix.
+One of the largest reasons people may avoid Nuix entity wrappers is because of the greedy way they are captured with a requirement to validate these entities outside of Nuix.
 
 It could be used in replacement to the built in Named Entities and will in fact generate the same results.
 
