@@ -1,0 +1,787 @@
+[
+	{
+		"title"           : "Business Number",
+		"icon"            : "company",
+		"group"           : "Australia",
+		"abbreviation"    : "ABN",
+		"description"     : "A unique 11-digit identifier issued by the Australian Business Register (ABR) which is operated by the Australian Taxation Office (ATO)",
+		"regex"           : "(?<=^|\\s|\\b)(\\d *?){11}(?=$|\\s|\\b)",
+		"validationSteps" : [
+			{
+				"method": "splitIntoChunks",
+				"params": [ "" ]
+			},
+			{
+				"method": "removeElements",
+				"params": [ " " ]
+			},
+			{
+				"method": "mapIntArrayToStringArray",
+				"params": [ ]
+			},
+			{
+				"method": "addArray",
+				"params": [
+					{
+						"11": [ -1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ]
+					}
+				]
+			},
+			{
+				"method": "applyWeight",
+				"params": [
+					{
+						"11": [ 10 , 1 , 3 , 5 , 7 , 9 , 11 , 13, 15, 17, 19 ]
+					}
+				]
+			},
+			{
+				"method": "sumArray"
+			},
+			{
+				"method": "modBy",
+				"params": [ 89 ]
+			},
+			{
+				"method": "assertEquals",
+				"params": [ 0 ]
+			}
+		]
+	},
+	{
+		"title"           : "Medicare",
+		"icon"            : "AU-medicare",
+		"group"           : "Australia",
+		"abbreviation"    : "Medicare Number",
+		"description"     : "The card or the Medicare number is required to be provided to enable the cardholder to receive a rebate of medical expenses under Australia's Medicare system",
+		"regex"           : "(?<=^|\\s|\\b)\\d{4} *?\\d{5} *?\\d(?:[-\\/ ]*?\\d)*?(?=$|\\s|\\b)",
+		"validationSteps" : [
+			{
+				"method": "changeCase",
+				"params": [ "up" ]
+			},
+			{
+				"method": "splitIntoChunks",
+				"params": [ "" ]
+			},
+			{
+				"method": "removeElements",
+				"params": [ " ", "/" ]
+			},
+			{
+				"method": "mapIntArrayToStringArray",
+				"params": [ ]
+			},
+			{
+				"method": "saveState",
+				"params": [ "chunked" ]
+			},
+			{
+				"method": "getElementAtPosition",
+				"params": [ 0 ]
+			},
+			{
+				"method": "assertEqualsAny",
+				"params": [ 2 , 3 , 4 , 5 , 6 ]
+			},
+			{
+				"method": "loadState",
+				"params": [ "chunked" ]
+			},
+			{
+				"method": "applyWeight",
+				"params": [
+					{
+						"9" : [ 1 , 3 , 7 , 9 , 1 , 3 , 7 , 9 , 0 ],
+						"10": [ 1 , 3 , 7 , 9 , 1 , 3 , 7 , 9 , 0 , 0 ],
+						"11": [ 1 , 3 , 7 , 9 , 1 , 3 , 7 , 9 , 0 , 0 , 0 ]
+					}
+				]
+			},
+			{
+				"method": "sumArray"
+			},
+			{
+				"method": "modBy",
+				"params": [ 10 ]
+			},
+			{
+				"method": "saveState",
+				"params": [ "checkDigit" ]
+			},
+			{
+				"method": "loadState",
+				"params": [ "chunked" ]
+			},
+			{
+				"method": "getElementAtPosition",
+				"params": [ 8 ]
+			},
+			{
+				"method": "assertStateMatches",
+				"params": [ "checkDigit" ]
+			}
+		]
+	},
+	{
+		"title"           : "Tax File Number",
+		"icon"            : "personal-id-num",
+		"group"           : "Australia",
+		"abbreviation"    : "TFN",
+		"description"     : "A unique identifier issued by the Australian Taxation Office (ATO) to each taxpaying entity — an individual, company, superannuation fund, partnership, or trust. This is usually found in the formats of XXX XXX XXX, XXX XXX XX, XXXXXXXXX, XXXXXXXX",
+		"regex"           : "(?<=^|\\s|\\b)\\d{3}[ ]*\\d{3}[ ]*\\d{2,3}(?=$|\\s|\\b)$",
+		"validationSteps" : [
+			{
+				"method": "splitIntoChunks",
+				"params": [ "" ]
+			},
+			{
+				"method": "removeElements",
+				"params": [ " " ]
+			},
+			{
+				"method": "mapIntArrayToStringArray",
+				"params": [ ]
+			},
+			{
+				"method": "applyWeight",
+				"params": [
+					{
+						"8": [ 10 , 7 , 8 , 4 , 6 , 3 , 5 , 1 ],
+						"9": [ 10 , 7 , 8 , 4 , 6 , 3 , 5 , 2 , 1 ]
+					}
+				]
+			},
+			{
+				"method": "sumArray"
+			},
+			{
+				"method": "modBy",
+				"params": [ 11 ]
+			},
+			{
+				"method": "assertEquals",
+				"params": [ 0 ]
+			}
+		]
+	},
+	{
+		"title"           : "Social Insurance Number",
+		"icon"            : "CA-SIN",
+		"group"           : "Canada",
+		"abbreviation"    : "SIN",
+		"description"     : "A 9 digit number that you need to work in Canada or to have access to government programs and benefits. A SIN is issued to one person only and it cannot legally be used by anyone else",
+		"regex"           : "(?<=^|\\s|\\b)(?:\\d{3} *?){3}(?=$|\\s|\\b)",
+		"validationSteps" : [
+			{
+				"method": "splitIntoChunks",
+				"params": [ "" ]
+			},
+			{
+				"method": "removeElements",
+				"params": [ " " ]
+			},
+			{
+				"method": "mapIntArrayToStringArray",
+				"params": [ ]
+			},
+			{
+				"method": "applyWeight",
+				"params": [
+					{
+						"9": [ 1 , 2 , 1 , 2 , 1 , 2 , 1 , 2 , 1 ]
+					}
+				]
+			},
+			{
+				"method": "joinStringArray",
+				"params": [ "" ]
+			},
+			{
+				"method": "splitIntoChunks",
+				"params": [ "" ]
+			},
+			{
+				"method": "mapIntArrayToStringArray",
+				"params": [ ]
+			},
+			{
+				"method": "sumArray"
+			},
+			{
+				"method": "modBy",
+				"params": [ 10 ]
+			},
+			{
+				"method": "assertEquals",
+				"params": [ 0 ]
+			}
+		]
+	},
+	{
+		"title"           : "Personal Public Service Number",
+		"icon"            : "personal-id-num",
+		"group"           : "Ireland",
+		"abbreviation"    : "PPS",
+		"description"     : "An identifier issued by the Client Identity Services section of the Department of Employment Affairs and Social Protection, on behalf of the Minister for Social Protection in Ireland",
+		"regex"           : "(?<=^|\\s|\\b)\\d{7}[A-Z]/*?[A-Z](?=$|\\s|\\b)",
+		"validationSteps" : [
+			{
+				"method": "changeCase",
+				"params": [ "up" ]
+			},
+			{
+				"method": "splitIntoChunks",
+				"params": [ "" ]
+			},
+			{
+				"method": "removeElements",
+				"params": [ "/" ]
+			},
+			{
+				"method": "substitueArray",
+				"params": [
+					[ "0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z" ],
+					[  0 , 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26 ]
+				]
+			},
+			{
+				"method": "applyWeight",
+				"params": [
+					{
+						"9": [ 8 , 7 , 6 , 5 , 4 , 3 , 2 , -1, 9 ]
+					}
+				]
+			},
+			{
+				"method": "sumArray"
+			},
+			{
+				"method": "modBy",
+				"params": [ 23 ]
+			},
+			{
+				"method": "assertEquals",
+				"params": [ 0 ]
+			}
+		]
+	},
+	{
+		"title"           : "Health Index Number",
+		"icon"            : "personal-id-num",
+		"group"           : "New Zealand",
+		"abbreviation"    : "NHI",
+		"description"     : "the unique person identifier used within the New Zealand health system",
+		"regex"           : "(?<=^|\\s|\\b)[A-Z]{3} *?\\d{4}(?=$|\\s|\\b)",
+		"validationSteps" : [
+			{
+				"method": "changeCase",
+				"params": [ "up" ]
+			},
+			{
+				"method": "splitIntoChunks",
+				"params": [ "" ]
+			},
+			{
+				"method": "removeElements",
+				"params": [ " " ]
+			},
+			{
+				"method": "substitueArray",
+				"params": [
+					[ "0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","J","K","L","M","N","P","Q","R","S","T","U","V","W","X","Y","Z" ],
+					[  0 , 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24 ]
+				]
+			},
+			{
+				"method": "saveState",
+				"params": [ "chunked" ]
+			},
+			{
+				"method": "applyWeight",
+				"params": [
+					{
+						"7": [ 7 , 6 , 5 , 4 , 3 , 2 , 0 ]
+					}
+				]
+			},
+			{
+				"method": "sumArray"
+			},
+			{
+				"method": "modBy",
+				"params": [ 11 ]
+			},
+			{
+				"method": "saveState",
+				"params": [ "integrityCheck" ]
+			},
+			{
+				"method": "assertNotEquals",
+				"params": [ 0 ]
+			},
+			{
+				"method": "loadState",
+				"params": [ "integrityCheck" ]
+			},
+			{
+				"method": "add",
+				"params": [ -11 ]
+			},
+			{
+				"method": "modBy",
+				"params": [ 10 ]
+			},
+			{
+				"method": "saveState",
+				"params": [ "checkDigit" ]
+			},
+			{
+				"method": "loadState",
+				"params": [ "chunked" ]
+			},
+			{
+				"method": "getElementAtPosition",
+				"params": [ 6 ]
+			},
+			{
+				"method": "assertStateMatches",
+				"params": [ "checkDigit" ]
+			}
+		]
+	},
+	{
+		"title"           : "Individual Taxpayer Identification Number",
+		"icon"            : "personal-id-num",
+		"group"           : "United States of America",
+		"abbreviation"    : "ITIN",
+		"description"     : "U.S. Individual Taxpayer Identification Number (ITIN) as defined in December 2006. The valid range is 900-70-0000 through 999-88-9999, all numeric values.",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)(9\d{2})([ \-]?)([7]\d|8[0-8])([ \-]?)(\d{4})(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "RFC for tax payers",
+		"icon"            : "personal-id-num",
+		"group"           : "Mexico",
+		"abbreviation"    : "RFC",
+		"description"     : "This is the expression to validate the personal key for tax payers in Mexico (called RFC) as individuals (not for enterprises).",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)([A-Z]{4})(\d{2})(0[1-9]|1[0-2])([0-2]\d|3[0-1])((([A-Z]{3})|(\d{3})|([A-Z]{2}\d)|(\d{2}[A-Z])|([A-Z]\d{2})|(\d[A-Z]{2})|([A-Z]\d[A-Z])|(\d[A-Z]\d)*))(\d{4})(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Permenant Account Number",
+		"icon"            : "in",
+		"group"           : "India",
+		"abbreviation"    : "PAN",
+		"description"     : "Indian Permenant Account Number allocated by Income Tax Authority",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[A-Z]{5}[0-9]{4}[A-Z]{1}$(\d{4})(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Switch",
+		"icon"            : "credit-card-num",
+		"group"           : "United Kingdom",
+		"abbreviation"    : "switch",
+		"description"     : "card numbers - a payment method used extensively in the UK.",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)([0-9]{6}[\s\-]{1}[0-9]{12}|[0-9]{18})$(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "National identification number",
+		"icon"            : "gb",
+		"group"           : "United Kingdom",
+		"abbreviation"    : "NI",
+		"description"     : "National identification number",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z]{1}[0-9]{6}[A-DFM]?(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "National Insurance",
+		"icon"            : "gb",
+		"group"           : "United Kingdom",
+		"abbreviation"    : "UKNI",
+		"description"     : "UK National Insurance Number",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[A,B,C,D,E,G,H,J-P,R-T,X-Z][A-N,P-Z][0-9]{6}[A-D]?(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "NHS Number",
+		"icon"            : "gb",
+		"group"           : "United Kingdom",
+		"abbreviation"    : "NHS",
+		"description"     : "UK NHS Number",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[0-9]{3}[ -]?[0-9]{3}[-]?[0-9]{4}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Employee Identity Number",
+		"icon"            : "us",
+		"group"           : "United States of America",
+		"abbreviation"    : "EIN",
+		"description"     : "US format Emploee Identity No.s (EIN)",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)(\d{2}-\d{7})(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Twitter Handler",
+		"icon"            : "email",
+		"group"           : "Global",
+		"abbreviation"    : "twitter",
+		"description"     : "Twitter handles",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|(?<=[^a-zA-Z0-9-_\.]))@([A-Za-z]+[A-Za-z0-9]+)(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Hash Tag",
+		"icon"            : "personal-id-num",
+		"group"           : "Global",
+		"abbreviation"    : "hashtag",
+		"description"     : "#topics but not #topics;",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "\B(\#[a-zA-Z]+\b)(?!;)(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Contract execution date",
+		"icon"            : "company",
+		"group"           : "Global",
+		"abbreviation"    : "contract-date",
+		"description"     : "Finds a contract execution date witten in the legal form (as of this 23rd of December, 2014 - or variations.",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?:(as of th(is|e)\s\d?(st|nd|rd|th)\s(day of)\s)(Jan|January|Feb|February|Mar|March|Apr|May|Jun|June|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December|1|2|3|4|5|6|7|8|9|10|11|12|01|02|03|04|05|06|07|08|09)\s\d\d\d\d)|((effective as of|dated as of|made as of the|made as of)(\s)(Jan|January|Feb|February|Mar|March|Apr|May|Jun|June|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December)[,\s*]?\d\d?(,\s*)\d\d\d\d)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "GPS Coordinates",
+		"icon"            : "country",
+		"group"           : "Global",
+		"abbreviation"    : "gps",
+		"description"     : "GPS coords in the format of 0.000,0.000 to 0.00000000*,0.0000000*",
+		"comment"         : "Pattern known, in theory you could further validate based on known areas etc you are interested",
+		"regex"           : "(?<=^|\\s|\\b)(-?\d{1,3}\.\d{3}\d*,-?\d{1,3}\.\d{3}\d*)(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Social Security",
+		"icon"            : "us",
+		"group"           : "United States of America",
+		"abbreviation"    : "SSN",
+		"description"     : "a nine-digit number issued to U.S. citizens, permanent residents, and temporary (working) residents",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)(?=\d)(((?!9|666|000)\d{3})((\s-\s|-| )?)((?!00)\d{2})\3(?!0000)\d{4})(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "UNC Paths",
+		"icon"            : "url",
+		"group"           : "Global",
+		"abbreviation"    : "unc-path",
+		"description"     : "UNC Paths in the format of \\adsf\asdf\asfd\asdf",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)\\\\(\\\\\\w[\\w\\- ]+){1,10}[\\w\\-]\\\\[\\w\\-\\.]+(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Serial Shipping Container Code",
+		"icon"            : "country",
+		"group"           : "Global",
+		"abbreviation"    : "sscc",
+		"description"     : "SSCC Shipping codes",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)SSCC:\\s(.{7})(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "National identification number",
+		"icon"            : "at",
+		"group"           : "Austria",
+		"abbreviation"    : "ZMR-Zahl",
+		"description"     : "National identification number - Zentrales Melderegister (Central Register of Residents - CRR)",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[0-9]{12}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Social insurance number",
+		"icon"            : "at",
+		"group"           : "Austria",
+		"abbreviation"    : "ASVG",
+		"description"     : "Social insurance number",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[0-9]{10}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "New national identification number",
+		"icon"            : "at",
+		"group"           : "Austria",
+		"abbreviation"    : "ssPIN",
+		"description"     : "New national identification number",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[A-Za-z0-9+/]{22}[A-Za-z0-9+/=][A-Za-z0-9+/=](?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "National Identification number",
+		"icon"            : "be",
+		"group"           : "Belgium",
+		"abbreviation"    : "BE.ID",
+		"description"     : "Identification number of the National Register. Also used on SIS (social security) card",
+		"regex"           : "(?<=^|\\s|\\b)[0-0]{2}.?[0-9]{2}.?[0-9]{2}-[0-9]{3}.?[0-9]{2}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Единенгражданскиномер",
+		"icon"            : "bu",
+		"group"           : "Bulgaria",
+		"abbreviation"    : "EGN",
+		"description"     : "Uniform Civil Number",
+		"regex"           : "(?<=^|\\s|\\b)[0-9]{2}[0,1,2,4][0-9][0-9]{2}[0-9]{4}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Rodné číslo",
+		"icon"            : "cz",
+		"group"           : "Czech,Slovakia",
+		"abbreviation"    : "RČ",
+		"description"     : "Birth Number",
+		"regex"           : "(?<=^|\\s|\\b)[0-9]{2}[0,1,5][0-9][0-9]{2}/?[0-9]{4}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Číslo občianskeho preukazu",
+		"icon"            : "cz",
+		"group"           : "Czech,Slovakia",
+		"abbreviation"    : "ČOP",
+		"description"     : "Citizen’s Identification CardNumber",
+		"regex"           : "(?<=^|\\s|\\b)[A-Z]{2}[0-9]{6}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "CPR-nummer",
+		"icon"            : "dk",
+		"group"           : "Denmark",
+		"abbreviation"    : "CPR",
+		"description"     : "CPR number",
+		"regex"           : "(?<=^|\\s|\\b)[0-9]{2}[0,1][0-9][0-9]{2}-[0-9]{4}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Isikukood",
+		"icon"            : "ee",
+		"group"           : "Estonia",
+		"abbreviation"    : "IK",
+		"description"     : "Personal Code",
+		"regex"           : "(?<=^|\\s|\\b)[1-6][0-9]{2}[1,2][0-9][0-9]{2}[0-9]{4}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "International Bank Account Number",
+		"icon"            : "money",
+		"group"           : "Global",
+		"abbreviation"    : "IBAN",
+		"description"     : "ISO 13616 with ISO 3166 countrycode prefix in compact format",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[A-Z]{2}?[ ]?[0-9]{2}[ ]?[0-9]{4}[ ]?[0-9]{4}[ ]?[0-9]{4}[ ]?[0-9]{4}[ ]?[0-9]{4}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "henkilötunnus",
+		"icon"            : "fi",
+		"group"           : "Finland",
+		"abbreviation"    : "HETU",
+		"description"     : "Personal identity code",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[0-9]{2}.?[0,1][0-9].?[0-9]{2}[-+A][0-9]{3}[A-Z](?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Social security number",
+		"icon"            : "fr",
+		"group"           : "France",
+		"abbreviation"    : "NIR",
+		"description"     : "Social security number (INSEE)",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[1,2][ ]?[0-9]{2}[ ]?[0,1,2,3,5][0-9][ ]?[0-9A-Z]{5}[ ]?[0-9]{3}[ ]?[0-9]{2}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Personenkennziffer",
+		"icon"            : "de",
+		"group"           : "Germany",
+		"abbreviation"    : "PK",
+		"description"     : "Personenkennziffer (Bundeswehr)",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[0-9]{2}[0,1][0-9][0-9]{2}-[A-Z]-[0-9]{5}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Steuer-Identifikationsnummer",
+		"icon"            : "de",
+		"group"           : "Germany",
+		"abbreviation"    : "Steuer-ID",
+		"description"     : "Steuer-Identifikationsnummer",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[0-9]{3}/?[0-9]{4}/?[0-9]{4}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Versicherungsnummer",
+		"icon"            : "de",
+		"group"           : "Germany",
+		"abbreviation"    : "VSNR",
+		"description"     : "Versicherungsnummer,Rentenversicherungsnummer",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[0-9]{2}[0-9]{2}[0,1][0-9][0-9]{2}[A-Z][0-9]{2}[0-9](?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Tautotita",
+		"icon"            : "gr",
+		"group"           : "Greece",
+		"abbreviation"    : "Tautotita",
+		"description"     : "Tautotita",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[A-Z][ -]?[0-9]{6}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "TAJszám",
+		"icon"            : "hu",
+		"group"           : "Hungary",
+		"abbreviation"    : "TAJ",
+		"description"     : "Social insurance number",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[0-9]{3}[ ]?[0-9]{3}[ ][0-9]{3}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Személyi szám",
+		"icon"            : "hu",
+		"group"           : "Hungary",
+		"abbreviation"    : "Szam",
+		"description"     : "Personal identfication number(Személyi szám)",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[1-8][ ]?[0-9]{2}[0,1][0-9][0-9]{2}[ ]?[0-9]{4}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Codice fiscale",
+		"icon"            : "it",
+		"group"           : "Italy",
+		"abbreviation"    : "CF",
+		"description"     : "Codice fiscale",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[A-Z]{6}[0-9]{2}[A-E,H,L,M,P,R-T][0-9]{2}[A-Z0-9]{5}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Personas kodas",
+		"icon"            : "lv",
+		"group"           : "Latvia",
+		"abbreviation"    : "PK",
+		"description"     : "Personal no",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[0-9]{2}[0,1][0-9][0-9]-[0-9]{5}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Asmens kodas",
+		"icon"            : "lt",
+		"group"           : "Lithuania",
+		"abbreviation"    : "AK",
+		"description"     : "Personal code",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[3-5][0-9]{2}[0,1][0-9][0-9]{2}[0-9]{4}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Burgerservicenummer",
+		"icon"            : "nl",
+		"group"           : "Netherlands",
+		"abbreviation"    : "BSN",
+		"description"     : "Citizen’s Service Number",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[0-9]{9}[0-9]{4}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Fødselsnummer",
+		"icon"            : "no",
+		"group"           : "Norway",
+		"abbreviation"    : "FN",
+		"description"     : "Fødselsnummer",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[0-9]{2}[0,1][0-9][0-9]{2}[ ]?[0-9]{5}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "National identification number",
+		"icon"            : "pl",
+		"group"           : "Poland",
+		"abbreviation"    : "PESEL",
+		"description"     : "National identification number",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[0-9]{4}[0-3]{1}[0-9]{1}[0-9]{5}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Nr personal",
+		"icon"            : "ro",
+		"group"           : "Romania",
+		"abbreviation"    : "CNF",
+		"description"     : "Nr personal",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[1-8][0-9]{2}[0,1][0-9][0-9]{2}[0-9]{6}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Documento Nacional de Identidad",
+		"icon"            : "es",
+		"group"           : "Spain",
+		"abbreviation"    : "DNI",
+		"description"     : "Documento Nacional de Identidad",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[0-9,X,M,L,K,Y][0-9]{7}[A-Z](?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Personnr",
+		"icon"            : "se",
+		"group"           : "Sweden",
+		"abbreviation"    : "Personnr",
+		"description"     : "Personal id number",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[0-9]{2}[0-1][0-9][0-9]{2}[-+][0-9]{4}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "Old AVS format",
+		"icon"            : "ch",
+		"group"           : "Switzerland",
+		"abbreviation"    : "AVS",
+		"description"     : "Old AVS format with personal data encoded",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)[0-9]{3}.?[0-9]{2}.?[0-9]{3}.?[0-9]{3}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	},
+	{
+		"title"           : "New AVS format",
+		"icon"            : "ch",
+		"group"           : "Switzerland",
+		"abbreviation"    : "AVS 2008",
+		"description"     : "New AVS format (16 digits withconstant prefix 756, which is ISO 3166-1 country code)",
+		"comment"         : "Unknown validation Steps, pattern only known",
+		"regex"           : "(?<=^|\\s|\\b)756.?[0-9]{4}.?[0-9]{4}.?[0-9]{2}(?=$|\\s|\\b)",
+		"validationSteps" : [ ]
+	}
+]
