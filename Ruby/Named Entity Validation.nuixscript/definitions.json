@@ -357,7 +357,7 @@
 		"abbreviation"    : "ITIN",
 		"description"     : "U.S. Individual Taxpayer Identification Number (ITIN) as defined in December 2006. The valid range is 900-70-0000 through 999-88-9999, all numeric values.",
 		"comment"         : "Unknown validation Steps, pattern only known",
-		"regex"           : "(?<=^|\\s|\\b)(9\d{2})([ \-]?)([7]\d|8[0-8])([ \-]?)(\d{4})(?=$|\\s|\\b)",
+		"regex"           : "(?<=^|\\s|\\b)(9\\d{2})([ \\-]?)([7]\\d|8[0-8])([ \\-]?)(\\d{4})(?=$|\\s|\\b)",
 		"validationSteps" : [ ]
 	},
 	{
@@ -367,7 +367,7 @@
 		"abbreviation"    : "RFC",
 		"description"     : "This is the expression to validate the personal key for tax payers in Mexico (called RFC) as individuals (not for enterprises).",
 		"comment"         : "Unknown validation Steps, pattern only known",
-		"regex"           : "(?<=^|\\s|\\b)([A-Z]{4})(\d{2})(0[1-9]|1[0-2])([0-2]\d|3[0-1])((([A-Z]{3})|(\d{3})|([A-Z]{2}\d)|(\d{2}[A-Z])|([A-Z]\d{2})|(\d[A-Z]{2})|([A-Z]\d[A-Z])|(\d[A-Z]\d)*))(\d{4})(?=$|\\s|\\b)",
+		"regex"           : "(?<=^|\\s|\\b)([A-Z]{4})(\\d{2})(0[1-9]|1[0-2])([0-2]\\d|3[0-1])((([A-Z]{3})|(\\d{3})|([A-Z]{2}\\d)|(\\d{2}[A-Z])|([A-Z]\\d{2})|(\\d[A-Z]{2})|([A-Z]\\d[A-Z])|(\\d[A-Z]\\d)*))(\\d{4})(?=$|\\s|\\b)",
 		"validationSteps" : [ ]
 	},
 	{
@@ -377,7 +377,7 @@
 		"abbreviation"    : "PAN",
 		"description"     : "Indian Permenant Account Number allocated by Income Tax Authority",
 		"comment"         : "Unknown validation Steps, pattern only known",
-		"regex"           : "(?<=^|\\s|\\b)[A-Z]{5}[0-9]{4}[A-Z]{1}$(\d{4})(?=$|\\s|\\b)",
+		"regex"           : "(?<=^|\\s|\\b)[A-Z]{5}[0-9]{4}[A-Z]{1}$(\\d{4})(?=$|\\s|\\b)",
 		"validationSteps" : [ ]
 	},
 	{
@@ -387,7 +387,7 @@
 		"abbreviation"    : "switch",
 		"description"     : "card numbers - a payment method used extensively in the UK.",
 		"comment"         : "Unknown validation Steps, pattern only known",
-		"regex"           : "(?<=^|\\s|\\b)([0-9]{6}[\s\-]{1}[0-9]{12}|[0-9]{18})$(?=$|\\s|\\b)",
+		"regex"           : "(?<=^|\\s|\\b)([0-9]{6}[\\s\\-]{1}[0-9]{12}|[0-9]{18})$(?=$|\\s|\\b)",
 		"validationSteps" : [ ]
 	},
 	{
@@ -427,7 +427,7 @@
 		"abbreviation"    : "EIN",
 		"description"     : "US format Emploee Identity No.s (EIN)",
 		"comment"         : "Unknown validation Steps, pattern only known",
-		"regex"           : "(?<=^|\\s|\\b)(\d{2}-\d{7})(?=$|\\s|\\b)",
+		"regex"           : "(?<=^|\\s|\\b)(\\d{2}-\\d{7})(?=$|\\s|\\b)",
 		"validationSteps" : [ ]
 	},
 	{
@@ -437,7 +437,7 @@
 		"abbreviation"    : "twitter",
 		"description"     : "Twitter handles",
 		"comment"         : "Unknown validation Steps, pattern only known",
-		"regex"           : "(?<=^|(?<=[^a-zA-Z0-9-_\.]))@([A-Za-z]+[A-Za-z0-9]+)(?=$|\\s|\\b)",
+		"regex"           : "(?<=^|(?<=[^a-zA-Z0-9-_\\.]))@([A-Za-z]+[A-Za-z0-9]+)(?=$|\\s|\\b)",
 		"validationSteps" : [ ]
 	},
 	{
@@ -457,7 +457,7 @@
 		"abbreviation"    : "contract-date",
 		"description"     : "Finds a contract execution date witten in the legal form (as of this 23rd of December, 2014 - or variations.",
 		"comment"         : "Unknown validation Steps, pattern only known",
-		"regex"           : "(?:(as of th(is|e)\s\d?(st|nd|rd|th)\s(day of)\s)(Jan|January|Feb|February|Mar|March|Apr|May|Jun|June|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December|1|2|3|4|5|6|7|8|9|10|11|12|01|02|03|04|05|06|07|08|09)\s\d\d\d\d)|((effective as of|dated as of|made as of the|made as of)(\s)(Jan|January|Feb|February|Mar|March|Apr|May|Jun|June|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December)[,\s*]?\d\d?(,\s*)\d\d\d\d)",
+		"regex"           : "(?:(as of th(is|e)\\s\\d?(st|nd|rd|th)\\s(day of)\\s)(Jan|January|Feb|February|Mar|March|Apr|May|Jun|June|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December|1|2|3|4|5|6|7|8|9|10|11|12|01|02|03|04|05|06|07|08|09)\\s\\d\\d\\d\\d)|((effective as of|dated as of|made as of the|made as of)(\\s)(Jan|January|Feb|February|Mar|March|Apr|May|Jun|June|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December)[,\\s*]?\\d\\d?(,\\s*)\\d\\d\\d\\d)",
 		"validationSteps" : [ ]
 	},
 	{
@@ -467,7 +467,7 @@
 		"abbreviation"    : "gps",
 		"description"     : "GPS coords in the format of 0.000,0.000 to 0.00000000*,0.0000000*",
 		"comment"         : "Pattern known, in theory you could further validate based on known areas etc you are interested",
-		"regex"           : "(?<=^|\\s|\\b)(-?\d{1,3}\.\d{3}\d*,-?\d{1,3}\.\d{3}\d*)(?=$|\\s|\\b)",
+		"regex"           : "(?<=^|\\s|\\b)(-?\\d{1,3}\\.\\d{3}\\d*,-?\\d{1,3}\\.\\d{3}\\d*)(?=$|\\s|\\b)",
 		"validationSteps" : [ ]
 	},
 	{
@@ -477,7 +477,7 @@
 		"abbreviation"    : "SSN",
 		"description"     : "a nine-digit number issued to U.S. citizens, permanent residents, and temporary (working) residents",
 		"comment"         : "Unknown validation Steps, pattern only known",
-		"regex"           : "(?<=^|\\s|\\b)(?=\d)(((?!9|666|000)\d{3})((\s-\s|-| )?)((?!00)\d{2})\3(?!0000)\d{4})(?=$|\\s|\\b)",
+		"regex"           : "(?<=^|\\s|\\b)(?=\\d)(((?!9|666|000)\\d{3})((\\s-\\s|-| )?)((?!00)\\d{2})\3(?!0000)\\d{4})(?=$|\\s|\\b)",
 		"validationSteps" : [ ]
 	},
 	{
@@ -487,7 +487,7 @@
 		"abbreviation"    : "unc-path",
 		"description"     : "UNC Paths in the format of \\adsf\asdf\asfd\asdf",
 		"comment"         : "Unknown validation Steps, pattern only known",
-		"regex"           : "(?<=^|\\s|\\b)\\\\(\\\\\\w[\\w\\- ]+){1,10}[\\w\\-]\\\\[\\w\\-\\.]+(?=$|\\s|\\b)",
+		"regex"           : "(?<=^|\\s|\\b)\\\\(\\\\\\w[\\w\\\- ]+){1,10}[\\w\\\-]\\\\[\\w\\\-\\.]+(?=$|\\s|\\b)",
 		"validationSteps" : [ ]
 	},
 	{
