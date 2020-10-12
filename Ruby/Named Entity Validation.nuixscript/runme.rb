@@ -1,10 +1,10 @@
 # encoding: UTF-8
 # Where you currently have the folder where the json and icon subdirectory would be.
 # Worker Side Scripts won't know where to find these so you'll need to pass this along.
-$stagingFolder=nil # Please update this to be the literal path. This is so workers know where to pick up the definitions.json, return back __dir__ to reset this script. 
-$groups=[] # .group , only include these (if empty all included, example "Australia"
+$stagingFolder=nil # Please update this to be the literal path. This is so workers know where to pick up the definitions.json, return back nil to reset this script. 
+$groups=["Australia"] # .group , only include these (if empty all included, example "Australia"
 $specific=[] # .title , groups as above + these specific items, example "Australia-ABN"
-$debug=false # if you want more intense logging on each step of validation.
+$debug=true # if you want more intense logging on each step of validation.
 $useCache=true # store in memory known matches to save time recalculating. COST: More memory consumption.
 
 # Add methods with caution, but most things should be safe.
@@ -14,7 +14,6 @@ require 'fileutils'
 
 if($stagingFolder.nil?)
 	puts "$stagingFolder='" + __dir__ + "'\nPlease update line 4 of the runme.rb script to include the current directory as above"
-	$stagingFolder=__dir__ #temporarily using current path to continue running test/import.
 	exit
 end
 
@@ -112,6 +111,13 @@ def loadState(inputIgnored,params)
 end
 
 # A convenience method for substitueArray for known only int value arrays| an array of strings that can be converted to ints
+def mapCharArrayToIntArray(inputCharArray,params)
+	unused=params
+	return inputCharArray.map{|c|c.to_i}
+end
+
+
+# A convenience method for substitueArray for known only Integers converted to strings.
 def mapIntArrayToStringArray(inputIntarray,params)
 	unused=params
 	return inputIntarray.map{|i|i.to_s}
@@ -156,6 +162,11 @@ end
 # Add all the values in the input | an array of numbers
 def sumArray(inputINTarray,params)
 	return inputINTarray.reduce(0, :+)
+end
+
+# Strip any whitespace from start and end of input
+def stripString(input,params)
+	return input.strip()
 end
 
 # Used to translate the entity group and abbreviation into something that Nuix will permit (no spaces!)
