@@ -5,7 +5,7 @@
 		"group"           : "Australia",
 		"abbreviation"    : "ABN",
 		"description"     : "A unique 11-digit identifier issued by the Australian Business Register (ABR) which is operated by the Australian Taxation Office (ATO)",
-		"regex"           : "(?<=^|\\b)(\\d *?){11}(?=$|\\b)",
+		"regex"           : "(?<=^|\\b)(\\d[ -]*?){11}(?=$|\\b)",
 		"validationSteps" : [
 			{
 				"method": "splitIntoChunks",
@@ -13,7 +13,7 @@
 			},
 			{
 				"method": "removeElements",
-				"params": [ " " ]
+				"params": [ " ","-" ]
 			},
 			{
 				"method": "mapCharArrayToIntArray",
@@ -129,7 +129,7 @@
 		"group"           : "Australia",
 		"abbreviation"    : "TFN",
 		"description"     : "A unique identifier issued by the Australian Taxation Office (ATO) to each taxpaying entity — an individual, company, superannuation fund, partnership, or trust. This is usually found in the formats of XXX XXX XXX, XXX XXX XX, XXXXXXXXX, XXXXXXXX",
-		"regex"           : "(?<=^|\\b)\\d{3}[ ]*\\d{3}[ ]*\\d{2,3}(?=$|\\b)",
+		"regex"           : "(?<=^|\\b)\\d{3}[ -]*?\\d{3}[ -]*\\d{2,3}(?=$|\\b)",
 		"validationSteps" : [
 			{
 				"method": "splitIntoChunks",
@@ -137,7 +137,7 @@
 			},
 			{
 				"method": "removeElements",
-				"params": [ " " ]
+				"params": [ " ","-" ]
 			},
 			{
 				"method": "mapCharArrayToIntArray",
@@ -153,6 +153,10 @@
 				]
 			},
 			{
+				"method": "saveState",
+				"params": [ "integrityCheck" ]
+			},
+			{
 				"method": "sumArray"
 			},
 			{
@@ -162,7 +166,19 @@
 			{
 				"method": "assertEquals",
 				"params": [ 0 ]
+			},
+			{
+				"method": "loadState",
+				"params": [ "integrityCheck" ]
+			},
+			{
+				"method": "sumArray"
+			},
+			{
+				"method": "assertNotEquals",
+				"params": [ 0 ]
 			}
+			
 		]
 	},
 	{
